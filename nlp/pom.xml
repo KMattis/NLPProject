@@ -5,6 +5,11 @@
 	<artifactId>nlp</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>nlpproject.jar</name>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>1.4.0.RELEASE</version>
+	</parent>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -31,6 +36,10 @@
 			<artifactId>spring-web</artifactId>
 			<version>4.3.2.RELEASE</version>
 		</dependency>
+		<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
@@ -80,6 +89,10 @@
 			<groupId>org.springframework.ldap</groupId>
 			<artifactId>spring-ldap-odm</artifactId>
 			<version>2.1.0.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 	</dependencies>
 </project>
