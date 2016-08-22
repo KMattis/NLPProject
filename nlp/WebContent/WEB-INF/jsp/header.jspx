@@ -1,0 +1,11 @@
+
+<ul id="menu">
+	<li><a href="index.jsp">Home</a></li>
+	<li><a>Administration</a>
+		<ul>
+			<li><a href="admin.html">Admin Page</a></li>
+		</ul>
+	</li>
+	<li><a href="welcome.html">NLP</a></li>
+	<li><a>LOGOUT COMING SOON</a></li>
+</ul>

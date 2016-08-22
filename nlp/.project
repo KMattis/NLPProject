@@ -4,6 +4,17 @@
 	<comment></comment>
 	<projects>
 	</projects>
+<plugins>
+<plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.3.9</version>
+        <configuration>
+          <source>1.8</source>
+          <target>1.8</target>
+        </configuration>
+      </plugin>
+</plugins>
 	<buildSpec>
 		<buildCommand>
 			<name>org.eclipse.wst.common.project.facet.core.builder</name>
@@ -16,12 +27,12 @@
 			</arguments>
 		</buildCommand>
 		<buildCommand>
-			<name>org.eclipse.m2e.core.maven2Builder</name>
+			<name>org.eclipse.wst.validation.validationbuilder</name>
 			<arguments>
 			</arguments>
 		</buildCommand>
 		<buildCommand>
-			<name>org.eclipse.wst.validation.validationbuilder</name>
+			<name>org.eclipse.m2e.core.maven2Builder</name>
 			<arguments>
 			</arguments>
 		</buildCommand>

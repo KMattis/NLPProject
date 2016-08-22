@@ -14,7 +14,7 @@ public class Config {
 	private static final File CONFIG_DIR = new File("cfg");
 	private static final String CONFIG_FILNAME_EXTENSION = ".cfg";
 	
-	private static Map<String, Config> configs = new HashMap<>();
+	private static Map<String, Config> configs = new HashMap<String, Config>();
 	
 	static{
 		FilenameFilter configFilenameFilter = new FilenameFilter() {
@@ -26,7 +26,8 @@ public class Config {
 		//Load all config files
 		for(File configFile : CONFIG_DIR.listFiles(configFilenameFilter)) {
 			String configName = configFile.getName().substring(0, configFile.getName().length() - CONFIG_FILNAME_EXTENSION.length());
-			try(InputStream is = new FileInputStream(configFile)){
+			try{
+				InputStream is = new FileInputStream(configFile);
 				Properties configProps = new Properties();
 				configProps.load(is);
 				
