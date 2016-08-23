@@ -17,7 +17,7 @@
 		<property name="dataSource" ref="dataSource" />
 		<property name="mappingResources">
 			<list>
-				<value>person.hbm.xml</value>
+				<value>objToDao.hbm.xml</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">
@@ -27,7 +27,8 @@
 		</property>
 	</bean>
 	
-	<bean id="personDAO" class="com.journaldev.dao.PersonDAOImpl">
-		<property name="sessionFactory" ref="hibernate3AnnotatedSessionFactory" />
+	<!-- TODO change to actual DAOImpl -->
+	<bean id="placerholderDAO" class="de.microstep.placeholderDAOImpl">
+		<property name="sessionFactory" ref="hibernate5XMLSessionFactory" />
 	</bean>
 </beans>

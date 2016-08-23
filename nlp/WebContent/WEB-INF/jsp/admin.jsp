@@ -7,9 +7,8 @@
 </head>
 <body>
 	<jsp:include page="header.jspx"></jsp:include>
+	<!--${header_menu}-->
 	
-	${logout_url}
-
 	${message}
 </body>
 </html>

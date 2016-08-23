@@ -7,14 +7,9 @@
 				http://www.springframework.org/schema/beans/spring-beans.xsd
 			http://www.springframework.org/schema/security
 				http://www.springframework.org/schema/security/spring-security.xsd
-		">
-		
-		<http/>
-		
-		<user-service>
-			<user name="user" password="password" authorities="USER_ROLE"/>
-		</user-service>
-	 
+	">
 	
+	<http/>
 	
-	</b:beans>
+	<user-service></user-service>
+</b:beans>

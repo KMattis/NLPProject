@@ -3,26 +3,38 @@ package de.microstep;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FilenameFilter;
+import java.io.IOError;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
 public class Config {
 	
-	private static final File CONFIG_DIR = new File("cfg");
+	private static final File CONFIG_DIR;
 	private static final String CONFIG_FILNAME_EXTENSION = ".cfg";
 	
 	private static Map<String, Config> configs = new HashMap<String, Config>();
 	
 	static{
+		try {
+			System.out.println(Config.class.getResource("./cfg/database.cfg"));
+			CONFIG_DIR = new File(Config.class.getResource("cfg/database.cfg").toURI()).getParentFile();
+		} catch (URISyntaxException e1) {
+			throw new IOError(e1);
+		}
+		
 		FilenameFilter configFilenameFilter = new FilenameFilter() {
 			public boolean accept(File dir, String name) {
 				return name.endsWith(CONFIG_FILNAME_EXTENSION);
 			}
 		};
 		
+		System.out.println(CONFIG_DIR);
+
+		System.out.println(CONFIG_DIR.listFiles(configFilenameFilter));
 		//Load all config files
 		for(File configFile : CONFIG_DIR.listFiles(configFilenameFilter)) {
 			String configName = configFile.getName().substring(0, configFile.getName().length() - CONFIG_FILNAME_EXTENSION.length());
