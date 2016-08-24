@@ -1,25 +1,33 @@
 package de.microstep;
 
+import java.io.IOError;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+/**
+ * Utility class to provide basic SQL functionality
+ * @author Klaus Mattis
+ * @since 24.08.2016
+ */
 public class SQL {
 
-	private static Connection dbCon;
+	private static final Connection dbCon;
 
 	static {
 		try {
-			System.err.println("Initializer started");
+			//Load class manually...
 			Class.forName("org.h2.Driver");
-			Configs dbCfg = Configs.getConfig("database");
-			String driverName = dbCfg.getString("driver.name");
-			String dbName = dbCfg.getString("database.name");
-			String jdbcUrl = String.format("jdbc:%1s:./%2s", driverName, dbName);
+			
+			String driver   = Configs.getConfig("database").getString("driver.name");
+			String database = Configs.getConfig("database").getString("database.name");
+			String jdbcUrl = String.format("jdbc:%1s:./%2s", driver, database);
+			
 			dbCon = DriverManager.getConnection(jdbcUrl);
-			execute("CREATE TABLE IF NOT EXISTS USERS(USER VARCHAR(64), PASS VARCHAR(64), ADMIN VARCHAR(10));");
+			
+			execute(Configs.getConfig("database").getString("createTable.users"));
 			ResultSet result = query("SELECT COUNT(*) FROM USERS");
 			boolean hasEntries = true;
 			if (result.next())
@@ -30,21 +38,26 @@ public class SQL {
 				execute("INSERT INTO USERS VALUES ('" + adminName + "', '" + adminPass + "', 'true');");
 			}
 		} catch (Throwable e) {
-			System.err.println("Print Stacktrace:");
 			e.printStackTrace();
-			// TODO appropriate exception handling
+			throw new IOError(e); //We can't go on now...
 		}
 	}
-
-	private SQL() {
-		assert false;
-	}
-
+	
+	/**
+	 * @param SQLQuery the sql-format query
+	 * @return a result set delivered by executing the query string
+	 * @throws SQLException if an SQLError occurred
+	 */
 	public static ResultSet query(String SQLQuery) throws SQLException {
 		Statement statement = dbCon.createStatement();
 		return statement.executeQuery(SQLQuery);
 	}
 
+	/**
+	 * This method executes the given update command
+	 * @param string the sql-format update command
+	 * @throws SQLException uf an SQLError occured
+	 */
 	public static void execute(String string) throws SQLException {
 		Statement stat = dbCon.createStatement();
 		stat.executeUpdate(string);
@@ -52,6 +65,9 @@ public class SQL {
 		dbCon.commit();
 	}
 
+	/**
+	 * @return the current connection to the database
+	 */
 	public static Connection getCon() {
 		return dbCon;
 	}

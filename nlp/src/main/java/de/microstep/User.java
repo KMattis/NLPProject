@@ -8,6 +8,12 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+/**
+ * Implementation of UserDetails used for creating Authority Tokens
+ * @see Spring Security
+ * @author Klaus Mattis
+ * @since 24.08.2016
+ */
 public class User implements UserDetails {
 
 	private static final long serialVersionUID = -2469776328386654336L;
@@ -19,7 +25,7 @@ public class User implements UserDetails {
 		this.user = user;
 		this.password = password;
 		auth.add(new SimpleGrantedAuthority("ROLE_USER"));
-		if(admin)
+		if(admin) //Add admin role if privileged
 			auth.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
 	}
 	
@@ -38,7 +44,7 @@ public class User implements UserDetails {
 		return user;
 	}
 
-	//At the moment, just return true in the following methods
+	//At the moment, just return true (no support for account disabling etc.)
 	
 	@Override
 	public boolean isAccountNonExpired() {

@@ -11,6 +11,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+/**
+ * Class for Configuration management
+ * @author Klaus Mattis
+ * @since 24.08.2016
+ */
 public class Configs {
 	
 	private static final File CONFIG_DIR;
@@ -20,7 +25,7 @@ public class Configs {
 	
 	static{
 		try {
-			CONFIG_DIR = new File(Configs.class.getResource("cfg/").toURI());
+			CONFIG_DIR = new File(Configs.class.getResource("config/").toURI());
 		} catch (URISyntaxException e1) {
 			throw new IOError(e1);
 		}

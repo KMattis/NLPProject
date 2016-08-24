@@ -6,6 +6,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Utility class to provide functionality for our JSP-pages
+ * @author Klaus Mattis
+ * @since 24.08-1026
+ */
 public class JSPUtils {
 	
 	public static List<String[]> getAllUsers(){

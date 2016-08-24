@@ -17,6 +17,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+/**
+ * The actual spring controller class
+ * 
+ * @author Klaus Mattis
+ * @see Spring
+ * @since 24.08.2016
+ */
 @Controller
 public class WebController {
 
@@ -51,9 +58,7 @@ public class WebController {
 		if (!SecurityUtils.isAdmin()) {
 			return REDIRECT_TO_HOME;
 		}
-
 		String message = "";
-
 		Map<String, String[]> parameters = request.getParameterMap();
 		if (!parameters.isEmpty()) {
 			String[] username_arr = parameters.get("name");
@@ -65,27 +70,14 @@ public class WebController {
 				String username = username_arr[0];
 				String password = password_arr[0];
 				boolean admin = admin_arr == null ? false : admin_arr[0].equals("on");
-
-				if (insertUser == null) {
-					Connection con = SQL.getCon();
-					try {
-						insertUser = con.prepareStatement("INSERT INTO USERS VALUES(?, ?, ?)");
-					} catch (SQLException e) {
-						e.printStackTrace();
-						throw new IOError(e); // Should never happen
-					}
-				}
-
 				try {
+					if (insertUser == null) {
+						Connection con = SQL.getCon();
+						insertUser = con.prepareStatement("INSERT INTO USERS VALUES(?, ?, ?)");
+					}
 					insertUser.setString(1, username);
 					insertUser.setString(2, password);
 					insertUser.setString(3, Boolean.toString(admin));
-				} catch (SQLException e) {
-					e.printStackTrace();
-					throw new IOError(e); // Should never happen
-				}
-
-				try {
 					insertUser.execute();
 					SQL.getCon().commit();
 					message = "User succesfully registered";
@@ -115,23 +107,17 @@ public class WebController {
 
 		String username = request.getParameter("remove");
 		if (username != null) {
-			if (getDeclearedUser == null) {
-				try {
-					getDeclearedUser = SQL.getCon().prepareStatement("SELECT * FROM USERS WHERE USER = ?");
-				} catch (SQLException e) {
-					e.printStackTrace();
-					throw new IOError(e);
-				}
-			}
-
 			try {
+				if (getDeclearedUser == null) { //Lazy initialize prepared statement
+					getDeclearedUser = SQL.getCon().prepareStatement("SELECT * FROM USERS WHERE USER = ?");
+				}
 				getDeclearedUser.setString(1, username);
 				ResultSet result = getDeclearedUser.executeQuery();
 				if (result.next()) {
 					if (Boolean.parseBoolean(result.getString(3))) {
 						message = "Cannot delete an admin user";
 					} else {
-						if (deleteUser == null) {
+						if (deleteUser == null) { //Lazy initialize prepared statement
 							deleteUser = SQL.getCon().prepareStatement("DELETE FROM USERS WHERE USER = ?");
 						}
 						deleteUser.setString(1, username);
@@ -143,8 +129,7 @@ public class WebController {
 					message = "User '" + username + "' does not exists";
 				}
 			} catch (SQLException e) {
-				e.printStackTrace();
-				throw new IOError(e);
+				message = "Could not delete user because of SQLException: " + e.getMessage();
 			}
 		}
 
@@ -153,7 +138,7 @@ public class WebController {
 	
 	@RequestMapping(value="/")
 	public String defaultRedirect(){
-		return REDIRECT_TO_HOME;
+		return REDIRECT_TO_HOME; //default redirect to home
 	}
 	
 }
