@@ -33,4 +33,16 @@ public class SecurityUtils {
 		return hasRole("ROLE_ADMIN");
 	}
 	
+	public static String getUsername(){
+		SecurityContext context = SecurityContextHolder.getContext();
+		if(context == null)
+			return null;
+		
+		Authentication authentication = context.getAuthentication();
+		if(authentication == null)
+			return null;
+		
+		return authentication.getName();
+	}
+	
 }

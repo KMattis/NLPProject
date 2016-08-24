@@ -20,8 +20,7 @@ public class Config {
 	
 	static{
 		try {
-			System.out.println(Config.class.getResource("./cfg/database.cfg"));
-			CONFIG_DIR = new File(Config.class.getResource("cfg/database.cfg").toURI()).getParentFile();
+			CONFIG_DIR = new File(Config.class.getResource("cfg/").toURI());
 		} catch (URISyntaxException e1) {
 			throw new IOError(e1);
 		}
@@ -32,23 +31,14 @@ public class Config {
 			}
 		};
 		
-		System.out.println(CONFIG_DIR);
-
-		System.out.println(CONFIG_DIR.listFiles(configFilenameFilter));
 		//Load all config files
 		for(File configFile : CONFIG_DIR.listFiles(configFilenameFilter)) {
 			String configName = configFile.getName().substring(0, configFile.getName().length() - CONFIG_FILNAME_EXTENSION.length());
-			try{
-				InputStream is = new FileInputStream(configFile);
+			try(InputStream is = new FileInputStream(configFile)){
 				Properties configProps = new Properties();
 				configProps.load(is);
 				
-				if(configProps.containsKey("config.name")){
-					configName = configProps.getProperty("config.name");
-					configProps.remove("config.name");
-				}
-				
-				addConfig(configName, new Config(configProps));
+				configs.put(configName, new Config(configProps));
 			} catch (IOException e) {
 				
 				e.printStackTrace();
@@ -56,18 +46,11 @@ public class Config {
 		}
 		
 		//Load system config
-		addConfig("system", new Config(System.getProperties()));
+		configs.put("system", new Config(System.getProperties()));
 	}
 	
 	public static Config getConfig(String name) {
 		return configs.get(name);
-	}
-	
-	private static void addConfig(String name, Config cfg){
-		Config bevor = configs.put(name, cfg);
-		if(bevor != null){
-			System.err.println("Multiple configs with config name " + name + " were found, they will override themselves");
-		}
 	}
 	
 	private Properties props;

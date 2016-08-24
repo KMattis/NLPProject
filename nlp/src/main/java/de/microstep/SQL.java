@@ -13,11 +13,22 @@ public class SQL {
 	static {
 		try {
 			System.err.println("Initializer started");
+			Class.forName("org.h2.Driver");
 			Config dbCfg = Config.getConfig("database");
 			String driverName = dbCfg.getString("driver.name");
 			String dbName = dbCfg.getString("database.name");
 			String jdbcUrl = String.format("jdbc:%1s:./%2s", driverName, dbName);
 			dbCon = DriverManager.getConnection(jdbcUrl);
+			execute("CREATE TABLE IF NOT EXISTS USERS(USER VARCHAR(64), PASS VARCHAR(64), ADMIN VARCHAR(10));");
+			ResultSet result = query("SELECT COUNT(*) FROM USERS");
+			boolean hasEntries = true;
+			if (result.next())
+				hasEntries = result.getInt(1) > 0;
+			if (!hasEntries) {
+				String adminName = Config.getConfig("settings").getString("users.admin.default.name");
+				String adminPass = Config.getConfig("settings").getString("users.admin.default.pass");
+				execute("INSERT INTO USERS VALUES ('" + adminName + "', '" + adminPass + "', 'true');");
+			}
 		} catch (Throwable e) {
 			System.err.println("Print Stacktrace:");
 			e.printStackTrace();
@@ -39,5 +50,9 @@ public class SQL {
 		stat.executeUpdate(string);
 		stat.close();
 		dbCon.commit();
+	}
+
+	public static Connection getCon() {
+		return dbCon;
 	}
 }

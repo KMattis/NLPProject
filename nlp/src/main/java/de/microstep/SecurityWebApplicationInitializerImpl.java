@@ -1,7 +1,9 @@
 package de.microstep;
 
-public class SecurityWebApplicationInitializerImpl {} /* extends AbstractSecurityWebApplicationInitializer{
+import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
+
+public class SecurityWebApplicationInitializerImpl extends AbstractSecurityWebApplicationInitializer{
 	public SecurityWebApplicationInitializerImpl() {
-		super(Config.class);
+		super(de.microstep.sec.Config.class);
 	}
-}*/
+}

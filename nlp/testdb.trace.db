@@ -1,3 +1,13 @@
 2016-08-23 17:05:20 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "INSERT VALUES[*]=('admin', 'admin', 'true') INTO USERS;"; expected "INTO"; SQL statement:
 INSERT VALUES=('admin', 'admin', 'true') INTO USERS; [42001-192]
+2016-08-24 10:40:20 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Invalid value "0" for parameter "columnIndex" [90008-192]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:345)
+	at org.h2.message.DbException.get(DbException.java:179)
+	at org.h2.message.DbException.getInvalidValueException(DbException.java:228)
+	at org.h2.jdbc.JdbcResultSet.checkColumnIndex(JdbcResultSet.java:3172)
+	at org.h2.jdbc.JdbcResultSet.get(JdbcResultSet.java:3200)
+	at org.h2.jdbc.JdbcResultSet.getInt(JdbcResultSet.java:321)
+	at de.microstep.SQL.<clinit>(SQL.java:26)
+	at de.microstep.Main.main(Main.java:8)

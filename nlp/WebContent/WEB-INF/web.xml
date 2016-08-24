@@ -6,7 +6,7 @@
 	version="3.0">
   	<display-name>NLP Test Project</display-name>
   	<welcome-file-list>
-    	<welcome-file>index.jsp</welcome-file>
+    	<welcome-file>/home</welcome-file>
   	</welcome-file-list>
   
     <servlet>
@@ -18,10 +18,11 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>nlp</servlet-name>
-        <url-pattern>/welcome.html</url-pattern>
-        <url-pattern>/admin.html</url-pattern>
-        <url-pattern>/registration.html</url-pattern>
-        <url-pattern>/logout.html</url-pattern>
+        <url-pattern>/home</url-pattern>
+        <url-pattern>/register</url-pattern>
+        <url-pattern>/logout</url-pattern>
+        <url-pattern>/users</url-pattern>
+        <url-pattern>/</url-pattern>
     </servlet-mapping>
   
   
@@ -31,7 +32,8 @@
 			/WEB-INF/spring/*.xml
 		</param-value>
 	</context-param>
-
+	
+	<!-- 
 	
 	<filter>
 		<filter-name>springSecurityFilterChain</filter-name>
@@ -46,4 +48,5 @@
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
     
+    -->
 </web-app>

@@ -14,6 +14,8 @@
 		<version-jsp-jstl>1.2</version-jsp-jstl>
 		<version-jackson>2.8.1</version-jackson>
 		<version-jstl>1.2</version-jstl>
+		<version-h2>1.4.192</version-h2>
+		<version-nlp>3.6.0</version-nlp>
 	</properties>
 	<build>
 		<sourceDirectory>src/main/java</sourceDirectory>
@@ -110,10 +112,28 @@
 			<version>${version-spring-ldap}</version>
 		</dependency>
 		<dependency>
-		     <groupId>jstl</groupId>
-		     <artifactId>jstl</artifactId>
-		     <version>${version-jstl}</version>
-		 </dependency>
+		    <groupId>jstl</groupId>
+		    <artifactId>jstl</artifactId>
+		    <version>${version-jstl}</version>
+		</dependency>
+		<dependency>
+		 	<groupId>com.h2database</groupId>
+		    <artifactId>h2</artifactId>
+		    <version>${version-h2}</version>
+		</dependency>
+		<!-- 
+		<dependency>
+		    <groupId>edu.stanford.nlp</groupId>
+		    <artifactId>stanford-corenlp</artifactId>
+		    <version>${version-nlp}</version>
+		</dependency>
+		<dependency>
+		    <groupId>edu.stanford.nlp</groupId>
+		    <artifactId>stanford-corenlp</artifactId>
+		    <version>${version-nlp}</version>
+		    <classifier>models</classifier>
+		</dependency>
+		-->
 	</dependencies>
 	<organization>
 		<name>Microstep AG</name>
