@@ -1,4 +1,5 @@
-/* Main */
+<%@page import="de.microstep.SecurityUtils"%>
+<style>
 #menu {
     width: 100%;
     margin: 0;
@@ -9,13 +10,11 @@
     border-radius: 50px;
     box-shadow: 0 2px 1px #9c9c9c;
 }
-
 #menu li {
     float: left;
     padding: 0 0 10px 0;
     position: relative;
 }
-
 #menu a {
     float: left;
     height: 25px;
@@ -26,16 +25,12 @@
     text-decoration: none;
     text-shadow: 0 1px 0 #000;
 }
-
 #menu li:hover > a {
     color: #fafafa;
 }
-
 #menu li:hover > ul {
     display: block;
 }
-
-/* Sub-menu */
 #menu ul {
     list-style: none;
     margin: 0;
@@ -50,7 +45,6 @@
     -moz-border-radius: 5px;
     border-radius: 5px;
 }
-
 #menu ul li {
     float: none;
     margin: 0;
@@ -59,11 +53,9 @@
     box-shadow: 0 1px 0 #111111, 
                 0 2px 0 #777777;
 }
-
 #menu ul li:last-child { 
     box-shadow: none;    
 }
-
 #menu ul a {    
     padding: 10px;
     height: auto;
@@ -73,16 +65,13 @@
     float: none;
     text-transform: none;
 }
-
 #menu ul a:hover {
     background-color: #0186ba;
     background-image: linear-gradient(#04acec, #0186ba);
 }
-
 #menu ul li:first-child a {
     border-radius: 5px 5px 0 0;
 }
-
 #menu ul li:first-child a:after {
     content: '';
     position: absolute;
@@ -94,16 +83,12 @@
     border-right: 5px solid transparent;
     border-bottom: 8px solid #444;
 }
-
 #menu ul li:first-child a:hover:after {
     border-bottom-color: #04acec; 
 }
-
 #menu ul li:last-child a {
     border-radius: 0 0 5px 5px;
 }
-
-/* Clear floated elements */
 #menu:after {
     visibility: hidden;
     display: block;
@@ -112,7 +97,6 @@
     clear: both;
     height: 0;
 }
-
 #menu ul li:first-child a:after {
     content: '';
     position: absolute;
@@ -124,7 +108,20 @@
     border-right: 5px solid transparent;
     border-bottom: 8px solid #444;
 }
-
 #menu ul li:first-child a:hover:after {
     border-bottom-color: #04acec; 
 }
+</style>
+<ul id="menu">
+	<li><a href="home">Home</a></li>
+	<% if(SecurityUtils.isAdmin()) { %>
+	<li><a>Administrator</a>
+		<ul>
+			<li><a href="register">Register new user</a></li>
+			<li><a href="users">Manage users</a></li>
+		</ul>
+	</li>
+	<% } %>
+	<li><a>You are logged in as <%= SecurityUtils.getUsername() %></a></li>
+	<li><a href="logout">Logout</a></li>
+</ul>

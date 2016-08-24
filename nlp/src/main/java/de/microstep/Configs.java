@@ -11,16 +11,16 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-public class Config {
+public class Configs {
 	
 	private static final File CONFIG_DIR;
 	private static final String CONFIG_FILNAME_EXTENSION = ".cfg";
 	
-	private static Map<String, Config> configs = new HashMap<String, Config>();
+	private static Map<String, Configs> configs = new HashMap<String, Configs>();
 	
 	static{
 		try {
-			CONFIG_DIR = new File(Config.class.getResource("cfg/").toURI());
+			CONFIG_DIR = new File(Configs.class.getResource("cfg/").toURI());
 		} catch (URISyntaxException e1) {
 			throw new IOError(e1);
 		}
@@ -38,7 +38,7 @@ public class Config {
 				Properties configProps = new Properties();
 				configProps.load(is);
 				
-				configs.put(configName, new Config(configProps));
+				configs.put(configName, new Configs(configProps));
 			} catch (IOException e) {
 				
 				e.printStackTrace();
@@ -46,16 +46,16 @@ public class Config {
 		}
 		
 		//Load system config
-		configs.put("system", new Config(System.getProperties()));
+		configs.put("system", new Configs(System.getProperties()));
 	}
 	
-	public static Config getConfig(String name) {
+	public static Configs getConfig(String name) {
 		return configs.get(name);
 	}
 	
 	private Properties props;
 	
-	public Config(Properties props) {
+	public Configs(Properties props) {
 		this.props = props;
 	}
 	

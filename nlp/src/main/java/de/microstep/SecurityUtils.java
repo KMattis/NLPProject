@@ -41,7 +41,7 @@ public class SecurityUtils {
 		Authentication authentication = context.getAuthentication();
 		if(authentication == null)
 			return null;
-		
+
 		return authentication.getName();
 	}
 	

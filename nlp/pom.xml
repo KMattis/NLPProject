@@ -92,6 +92,11 @@
 			<version>${version-jackson}</version>
 		</dependency>
 		<dependency>
+    		<groupId>javax.servlet</groupId>
+    		<artifactId>javax.servlet-api</artifactId>
+    		<version>3.1.0</version>
+		</dependency>
+		<dependency>
 			<groupId>javax.servlet.jsp</groupId>
 			<artifactId>javax.servlet.jsp-api</artifactId>
 			<version>${version-jsp}</version>

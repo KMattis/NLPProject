@@ -14,7 +14,7 @@ public class SQL {
 		try {
 			System.err.println("Initializer started");
 			Class.forName("org.h2.Driver");
-			Config dbCfg = Config.getConfig("database");
+			Configs dbCfg = Configs.getConfig("database");
 			String driverName = dbCfg.getString("driver.name");
 			String dbName = dbCfg.getString("database.name");
 			String jdbcUrl = String.format("jdbc:%1s:./%2s", driverName, dbName);
@@ -25,8 +25,8 @@ public class SQL {
 			if (result.next())
 				hasEntries = result.getInt(1) > 0;
 			if (!hasEntries) {
-				String adminName = Config.getConfig("settings").getString("users.admin.default.name");
-				String adminPass = Config.getConfig("settings").getString("users.admin.default.pass");
+				String adminName = Configs.getConfig("settings").getString("users.admin.default.name");
+				String adminPass = Configs.getConfig("settings").getString("users.admin.default.pass");
 				execute("INSERT INTO USERS VALUES ('" + adminName + "', '" + adminPass + "', 'true');");
 			}
 		} catch (Throwable e) {

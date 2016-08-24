@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 public class User implements UserDetails {
 
+	private static final long serialVersionUID = -2469776328386654336L;
 	private String user;
 	private String password;
 	private List<GrantedAuthority> auth = new ArrayList<>();

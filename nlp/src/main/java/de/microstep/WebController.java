@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +21,6 @@ import org.springframework.web.servlet.ModelAndView;
 public class WebController {
 
 	private static final String PAGE_TITLE = "page_title";
-	private static final String PAGE_MENU = "page_menu";
 	private static final String PAGE_DATA = "page_data";
 	private static final String DEFAULT_VIEW_NAME = "default";
 	private static final String REDIRECT_TO_HOME = "redirect:/home";
@@ -37,7 +35,6 @@ public class WebController {
 
 	private ModelAndView generatePage(String viewName, String title, String data) {
 		ModelAndView model = new ModelAndView(viewName);
-		model.addObject(PAGE_MENU, PageCreator.getHeader());
 		model.addObject(PAGE_TITLE, title);
 		model.addObject(PAGE_DATA, data);
 		return model;
@@ -57,7 +54,6 @@ public class WebController {
 
 		String message = "";
 
-		@SuppressWarnings("unchecked")
 		Map<String, String[]> parameters = request.getParameterMap();
 		if (!parameters.isEmpty()) {
 			String[] username_arr = parameters.get("name");
@@ -69,8 +65,6 @@ public class WebController {
 				String username = username_arr[0];
 				String password = password_arr[0];
 				boolean admin = admin_arr == null ? false : admin_arr[0].equals("on");
-
-				UserDetails user = new User(username, password, admin);
 
 				if (insertUser == null) {
 					Connection con = SQL.getCon();
@@ -91,7 +85,6 @@ public class WebController {
 					throw new IOError(e); // Should never happen
 				}
 
-				// TODO add to database
 				try {
 					insertUser.execute();
 					SQL.getCon().commit();
@@ -103,15 +96,6 @@ public class WebController {
 		}
 		return generatePage("register", "Register a new user", message);
 	}
-
-	// @RequestMapping("/admin")
-	// public Object admin(HttpServletRequest request, HttpServletResponse
-	// response) {
-	// if (!SecurityUtils.isAdmin()) {
-	// return REDIRECT_TO_HOME;
-	// }
-	// return generatePage("admin", "This is the admin page");
-	// }
 
 	@RequestMapping(value = "/logout")
 	public String logoutPage(HttpServletRequest request, HttpServletResponse response) {
@@ -164,12 +148,12 @@ public class WebController {
 			}
 		}
 
-		return generatePage("Manage Users", message + "<br/><br/>" + PageCreator.getUserTable());
+		return generatePage("users", "Manage Users", message);
 	}
 	
 	@RequestMapping(value="/")
 	public String defaultRedirect(){
 		return REDIRECT_TO_HOME;
 	}
-
+	
 }

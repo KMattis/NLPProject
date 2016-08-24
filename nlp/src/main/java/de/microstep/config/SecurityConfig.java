@@ -1,4 +1,4 @@
-package de.microstep.sec;
+package de.microstep.config;
 
 import java.io.IOError;
 import java.sql.PreparedStatement;
@@ -21,7 +21,7 @@ import de.microstep.User;
 
 @Configuration
 @EnableWebSecurity
-public class Config {
+public class SecurityConfig {
 
 	private static boolean addedAuthenticationProvider = false;
 	
