@@ -14,7 +14,6 @@ public class DispatcherConfig {
 	
 	@Bean
 	public UrlBasedViewResolver viewResolver(){
-		System.out.println("DispatcherConfig.viewResolver()");
 		UrlBasedViewResolver resolver = new UrlBasedViewResolver();
 		resolver.setPrefix(Configs.getConfig("spring").getString("viewResolver.prefix"));
 		resolver.setSuffix(Configs.getConfig("spring").getString("viewResolver.suffix"));
